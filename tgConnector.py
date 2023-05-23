@@ -27,13 +27,13 @@ class TG:
 		@TG.bot.message_handler(commands=['start', 'help'])
 		def send_welcome(message):
 			# ONLY write message to user.
-			TG.bot.reply_to(message, "Привет, напиши расходник, информацию о котором ты хочешь получить.")
+			TG.bot.reply_to(message, 'Привет, напиши расходник, информацию о котором ты хочешь получить.')
 
 		@TG.bot.message_handler()
 		def chose_consumables(message):
 			markup = types.ReplyKeyboardMarkup(row_width=1)
 
-			if message.text == "Выбор популярных расходников":
+			if message.text == 'Выбор популярных расходников':
 				# Write buttons from list to markup.
 				markup.add(*[types.KeyboardButton(name) for name in TG.list_of_consumables_btn])
 			else:
@@ -41,7 +41,7 @@ class TG:
 				markup.add(*[types.KeyboardButton(name) for name in TG.list_of_service_btn])
 			# Write message to user and init menu.
 			TG.bot.send_message(message.from_user.id,
-										 "Привет, напиши расходник, информацию о котором ты хочешь получить.",
+										 'Привет, напиши расходник, информацию о котором ты хочешь получить.',
 										 reply_markup=markup)
 
 		TG.bot.polling(none_stop=True, interval=5)
