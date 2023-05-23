@@ -2,30 +2,26 @@ import telebot
 from telebot import types
 
 class TG:
+	"""
+	It's static class for connecting to telegram bot.
+
+	This class have __init__ method only for pass settings to this class.
+	"""
 	bot = None
 
 	list_of_consumables_btn = list()
 	list_of_service_btn = list()
 
-	list_of_consumables_btn.append('масло')
-	list_of_consumables_btn.append('бензин')
-	list_of_consumables_btn.append('гайки')
-	list_of_consumables_btn.append('бобры')
-	list_of_service_btn.append('/start')
-	list_of_service_btn.append('Выбор популярных расходников')
 
-
-	def __init__(self, api_key, consumables_file, service_file):
+	def __init__(self, api_key, consumables_list, service_list):
 		"""
 		* 'api_key': is API KEY for your TG bot.
-		* 'consumables_file': is filename with list of consumables buttons names.
-		* 'service_file': is filename with service buttons names.
+		* 'consumables_list': it's list with list of consumables buttons names.
+		* 'service_list': it's list with service buttons names.
 		"""
-		self.api_key = api_key
-		self.consumables_file = consumables_file
-		self.service_file = service_file
-
-		TG.bot = telebot.TeleBot(self.api_key)
+		TG.bot = telebot.TeleBot(api_key)
+		TG.list_of_consumables_btn = consumables_list
+		TG.list_of_service_btn = service_list
 
 
 		@TG.bot.message_handler(commands=['start', 'help'])
