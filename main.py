@@ -13,6 +13,6 @@ list_of_service_btn = parsedJson['list_of_service_btn']
 settingsFile.close
 
 # init bot.
-tgConnector.TG(api_key=api_key, consumables_list=list_of_consumables_btn, service_list=list_of_service_btn)
+TG = tgConnector.TG(api_key=api_key, consumables_list=list_of_consumables_btn, service_list=list_of_service_btn)
 
 # init db.
