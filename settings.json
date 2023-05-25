@@ -1,0 +1,5 @@
+{
+    "api_key": "TOKEN",
+    "list_of_consumables_btn": ["масло", "бензин", "болты", "гайки"],
+    "list_of_service_btn": ["/start", "Выбор популярных расходников"]
+}
