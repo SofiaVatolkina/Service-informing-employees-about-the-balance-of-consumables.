@@ -8,18 +8,22 @@ class TG:
 	This class have __init__ method only for pass settings to this class.
 	"""
 	bot = None
+	callback_function = None
 
 	list_of_consumables_btn = list()
 	list_of_service_btn = list()
 
-
-	def __init__(self, api_key, consumables_list, service_list):
+	def __init__(self, api_key, consumables_list, service_list, callback_function):
 		"""
 		* 'api_key': is API KEY for your TG bot.
 		* 'consumables_list': it's list with list of consumables buttons names.
 		* 'service_list': it's list with service buttons names.
+		* 'callback_function': it's function for return and processing user messages.
 		"""
-		TG.bot = telebot.TeleBot(api_key)
+		if not TG.bot:
+			TG.bot = telebot.TeleBot(api_key)
+		if not TG.callback_function:
+			TG.callback_function = callback_function
 		TG.list_of_consumables_btn = consumables_list
 		TG.list_of_service_btn = service_list
 
@@ -41,6 +45,11 @@ class TG:
 				else:
 					# Write buttons from list to markup.
 					markup.add(*[types.KeyboardButton(name) for name in TG.list_of_service_btn])
+					# Pass user message to main.py
+					if TG.callback_function:
+						TG.callback_function(message)
+					else:
+						raise ValueError("callback_function in TG class cannot be None!")
 				# Write message to user and init menu.
 				TG.bot.send_message(message.from_user.id,
 											 'Привет, напиши расходник, информацию о котором ты хочешь получить.',
