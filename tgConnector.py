@@ -37,6 +37,7 @@ class TG:
 
 			@TG.bot.message_handler()
 			def chose_consumables(message):
+				search_result = ''
 				markup = types.ReplyKeyboardMarkup(row_width=1)
 
 				if message.text == 'Выбор популярных расходников':
@@ -47,14 +48,20 @@ class TG:
 					markup.add(*[types.KeyboardButton(name) for name in TG.list_of_service_btn])
 					# Pass user message to main.py
 					if TG.callback_function:
-						TG.callback_function(message)
+						search_result = TG.callback_function(message)
 					else:
-						raise ValueError("callback_function in TG class cannot be None!")
+						raise ValueError('callback_function in TG class can not be None!')
 				# Write message to user and init menu.
-				TG.bot.send_message(message.from_user.id,
-											 'Привет, напиши расходник, информацию о котором ты хочешь получить.',
-											 reply_markup=markup)
+				if search_result:
+					TG.bot.send_message(message.from_user.id,
+										f'Вот что я нашёл в базе данных: {search_result}.',
+										reply_markup=markup)
+					print(f'DEBUG: {search_result}')
+				else:
+					TG.bot.send_message(message.from_user.id,
+										'Привет, напиши расходник, информацию о котором ты хочешь получить.',
+										reply_markup=markup)
 
 			TG.bot.polling(none_stop=True, interval=5)
 		else:
-			raise ValueError("Bot is not initialized!")
+			raise ValueError('Bot is not initialized!')
